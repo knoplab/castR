@@ -3,10 +3,12 @@ Title: Design and Analysis of Pooled Genome-Wide Libraries
 Version: 0.0.1.0000
 Authors@R: c(
 	person("Benjamin", "Buchmuller", 
-	email = "b.buchmuller@dkfz.de", role = c("aut", "cre"))
+	email = "b.buchmuller@zmbh.uni-heidelberg.de", role = c("aut", "cre")),
+	person("Herbst", "Konrad",
+	email = "k.herbst@zmbh.uni-heidelberg.de", role = c("aut"))
 	)
 Description: castR lets you create resources for the design 
-	and analysis of genome-wide pooled clone libraries by CASTING.
+	and analysis of pooled clone libraries by CASTLING.
 Depends: R (>= 3.2.1)
 License: GPL (>= 3)
 Encoding: UTF-8
