@@ -1,0 +1,20 @@
+Package: castR
+Title: Design and Analysis of Pooled Genome-Wide Libraries
+Version: 0.0.1.0000
+Authors@R: c(
+	person("Benjamin", "Buchmuller", 
+	email = "b.buchmuller@dkfz.de", role = c("aut", "cre"))
+	)
+Description: castR lets you create resources for the design 
+	and analysis of genome-wide pooled clone libraries by CASTING.
+Depends: R (>= 3.2.1)
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    Biostrings (>= 2.38.2),
+    data.table (>= 1.10.4),
+	readr (>= 1.0.0),
+	shiny (>= 1.0.0),
+    stringr (>= 1.1.0)
+RoxygenNote: 6.0.1
