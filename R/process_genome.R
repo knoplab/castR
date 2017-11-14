@@ -1,20 +1,20 @@
 # FUNCTIONS FOR GENOME PROCESSING ==============================================
 
-#' Select Genomic Features from a  GFF File for CASTING
+#' Select Genomic Features from a  GFF File for CASTLING
 #'
-#' Creates a CASTING lookup table from a genome assembly and its corresponding 
+#' Creates a CASTLING lookup table from a genome assembly and its corresponding 
 #' genomic feature annotation file. This serves as a starting point for further 
 #' processing.
-#' @details The CASTING lookup table is an expanded form of a GFF table with the
+#' @details The CASTLING lookup table is an expanded form of a GFF table with the
 #' last \code{range_width} nucleotides upstream and the first \code{range_width}
 #' nucleotides downstream the inteded site of integration/feature manipulation,
 #' referred to as landing sequences \code{ls_5_full} and \code{ls_3_full}. The
 #' \code{feature_site} and \code{offset} are kept as (mandatory) attributes of
 #' this \code{data.table}. Note that the GFF “attributes” column is renamed to 
-#' “\code{attribute}” in order to avoid potential confustion with base 
+#' “\code{attribute}” in order to avoid potential confusion with base 
 #' \code{attributes()} function.
 #' In addition, the GFF feature attributes “locus_tag” and “gene” are kept as
-#' human-readable identifiers in column if present.
+#' human-readable identifiers in a seperate column if present.
 #' @param genome_assembly A \code{DNAStringSet} of the genome assembly to be 
 #' processed. It must be structured by the same landmarks used in the coordinate 
 #' system of the genome annotation. 
@@ -170,11 +170,11 @@ find_features <- function(genome_assembly, genome_annotation,
   
 }
 
-#' Identify Candidate CRISPR Targets for CASTING
+#' Identify Candidate CRISPR Targets for CASTLING
 #'
-#' This function will expand a CASTING lookup table with CRISPR targets that
-#' can be used with CASTING.
-#' @details The CASTING lookup table will be expanded by the following columns:
+#' This function will expand a CASTLING lookup table with CRISPR targets that
+#' can be used with CASTLING.
+#' @details The CASTLING lookup table will be expanded by the following columns:
 #' \code{target_orientation} and \code{target_position}, which describe the position of the 
 #' first nucleotide of the target before/after the PAM with respect to the feature 
 #' start (\code{start}). The meaning of \code{target_orientation} is dependent on 
@@ -190,7 +190,7 @@ find_features <- function(genome_assembly, genome_annotation,
 #' On default, unsuitable targets will not be removed from the lookup table, but 
 #' are annotated in such a way that the user can exclude them manually by simple
 #' subset operations.
-#' @param subject A CASTING lookup table (\code{data.table} object).
+#' @param subject A CASTLING lookup table (\code{data.table} object).
 #' @param pattern The protospacer-adjacent motif (PAM) of the selected CRISPR
 #' endonuclease. This can contain IUPAC ambiguity letters.
 #' @param target_length The length of the crRNA or its genomic target respectively
@@ -208,7 +208,7 @@ find_features <- function(genome_assembly, genome_annotation,
 #' against. This should be a complete genome assembly.
 #' @param mismatches An integer vector with all number of mismatches that should
 #' be allowed for an off-target outside it's seed sequence. 
-#' @return A \code{data.table} compatible with CASTING. All sequences are
+#' @return A \code{data.table} compatible with CASTLING. All sequences are
 #' returned in sense target_orientation.
 #' @import data.table
 #' @importFrom stringr str_match str_count str_length
@@ -282,7 +282,7 @@ find_targets <- function(subject, pattern,
   # Query sequence framing is performed on data.table level to preserve infor-
   # mation on possible irregular feature ends at distal scaffold sites.
   
-  # combine both landing sequences
+  # combine both landing sequences (homology arms)
   subject[, subject.seq := paste0(ls_5_full, ls_3_full)]
   
   # subset
