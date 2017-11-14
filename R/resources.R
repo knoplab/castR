@@ -63,11 +63,26 @@ primers.vectorette <- list(
 
 # DEFAULTS ---------------------------------------------------------------------
 
-default.endonuclease  <- "FnCpf1"
-default.look_around   <- 200L
-default.target_length <-  20L
-default.target_core   <-   8L
-default.cleave_at     <-  15L
+# feature type to manipulate:
+def_feature_type  <- "gene"
+# feature site to manipulate (start = TRUE; end = FALSE):
+def_feature_site <- FALSE
+# offset towards the feature to manipulate:
+max_feature_dist <- 21L
+def_feature_dist <-  3L
+# region around the feature site to look into for targets:
+max_feature_look <- 200L
+def_feature_look <-  30L
+
+# CRISPR endonuclease:
+def_endonuclease  <- "FnCpf1"
+# CRISPR endonuclease target properties:
+def_target_totlen <- 20L # length of spacer
+def_target_corlen <-  8L # length of core
+def_target_cleave <- 15L # cleavage distance
+def_target_is_upstream <- FALSE # downstream of PAM?
+
+
 
 # SHINY HELPER FUNCTIONS =======================================================
 
