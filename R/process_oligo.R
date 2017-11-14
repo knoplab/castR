@@ -4,7 +4,7 @@
 #' 
 #' This \code{data.frame} is used to infer the length of landing sequence homology 
 #' provided in dependence of the absulte cleavage distance from the intended site
-#' of integration/feature manipulation for CASTING.
+#' of integration/feature manipulation for CASTLING.
 #' @param hom.in Homology towards the feature site, e. g. 5\' landing sequence
 #' for C-terminal tagging.
 #' @param hom.ex Homology away from the feature site, e. g. 3\' landing sequence
@@ -25,26 +25,26 @@ LANDING_SEQUENCE_ADJUSTMENT <- data.frame(
   ID = seq(0, 49)
 )
 
-#' Generate pre-CP Element Oligo Pool Sequences for CASTING
+#' Generate Oligo Pool Sequences for CASTLING
 #'
-#' This function will expand a (processed) CASTING lookup table which contains 
+#' This function will expand a (processed) CASTLING lookup table which contains 
 #' CRISPR target sequences with the respective oligo pool sequences that must be
-#' ordered as pre-CP elements according to the pre-CP pool template schemed.
-#' @details The CASTING lookup table must contain at least the \code{ls_5_full}, 
+#' ordered according to the oligo template schemed.
+#' @details The CASTLING lookup table must contain at least the \code{ls_5_full}, 
 #' the \code{ls_3_full}, and the \code{target_sequence} sequences, as well as the 
 #' inferred (signed/directional) \code{cleavage_distance} from the landing 
 #' sequence junction.
-#' @param subject A processed CASTING lookup table (\code{data.table} object);
+#' @param subject A processed CASTLING lookup table (\code{data.table} object);
 #' see details.
-#' @param template A string template of the pre-CP element, in which “\code{str_C}” 
-#' is replaced by the crRNA sequence, “\code{str_3}” by the adjusted 3\' landing 
+#' @param template A string template of the oligonucleotide, in which “\code{str_C}” 
+#' is replaced by the CRISPR spacer, “\code{str_3}” by the adjusted 3\' landing 
 #' sequence, and “\code{str_5}” by the adjusted 5\' landing sequence. Landing 
 #' sequence adjustment is defined in \code{LANDING_SEQUENCE_ADJUSTMENT}. 
 #' The \code{str_X} parameters can be used to force the reverse complement
 #' of the respective element.
 #' @param avoid_pattern A character vector of any pattern to avoid during oligo
 #' pool design. This can contain IUPAC ambiguity letters from base 3 onwards. 
-#' @return A \code{data.table} compatible with CASTING. All sequences are
+#' @return A \code{data.table} compatible with CASTLING. All sequences are
 #' returned in sense orientation.
 #' @import data.table
 #' @importFrom stringr str_replace
@@ -152,26 +152,26 @@ generate_oligo_sequence <- function(subject, template, str_C.RC = FALSE,
   
 }
 
-#' Generate a Reference Genome for post-CASTING NGS Analysis
+#' Generate a Reference Genome for post-CASTLING NGS Analysis
 #'
-#' This function will return a (processed) CASTING lookup table which contains 
+#' This function will return a (processed) CASTLING lookup table which contains 
 #' CRISPR target sequences with the respective reference genome sequences that
 #' should be used for Vectorette NGS.
-#' @details The CASTING lookup table must contain at least the \code{ls_5_full}, 
+#' @details The CASTLING lookup table must contain at least the \code{ls_5_full}, 
 #' the \code{ls_3_full}, and the \code{target_sequence} sequences, as well as the 
 #' inferred (signed/directional) \code{cleavage_distance} from the landing 
 #' sequence junction.
-#' @param subject A processed CASTING lookup table (\code{data.table} object);
+#' @param subject A processed CASTLING lookup table (\code{data.table} object);
 #' see details.
-#' @param template A string template of the pre-CP element, in which “\code{str_C}” 
-#' is replaced by the crRNA sequence, “\code{str_3}” by the adjusted 3\' landing 
+#' @param template A string template of the oligos, in which “\code{str_C}” 
+#' is replaced by the CRISPR spacer, “\code{str_3}” by the adjusted 3\' landing 
 #' sequence, and “\code{str_5}” by the adjusted 5\' landing sequence. Overlapping
 #' sequence material with the \code{tagging_cassette} will be removed. 
 #' @param tagging_cassette The sequence of the tagging cassette intended to be
 #' integrated at the genomic site.
-#' @param primer The Vectorette initiating primer for NGS. Use the annealing part
+#' @param primer The vectorette initiating primer for NGS. Use the annealing part
 #' only.
-#' @return A \code{data.table} compatible with CASTING. All sequences are
+#' @return A \code{data.table} compatible with CASTLING. All sequences are
 #' returned in sense orientation.
 #' @import data.table
 #' @importFrom utils head tail
