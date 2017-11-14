@@ -66,7 +66,7 @@ CASTLING_server <- function(session, input, output) {
              paste(input$inp_endonuclease_pam, collapse = ", ")
       ), 
       ifelse(ifelse(is.null(input$inp_target_is_upstream),
-             def_target_is_upstream, input$inp_target_is_upstream) == TRUE,
+             def_target_is_upstream, as.logical(input$inp_target_is_upstream)) == TRUE,
              " (downstream of protospacer)",
              " (upstream of protospacer)"
              ), "</td> 
@@ -88,7 +88,7 @@ CASTLING_server <- function(session, input, output) {
              def_target_cleave, input$inp_target_cleave
       ),
       ifelse(ifelse(is.null(input$inp_target_is_upstream),
-             def_target_is_upstream, input$inp_target_is_upstream) == TRUE,
+             def_target_is_upstream, as.logical(input$inp_target_is_upstream)) == TRUE,
              " nt upstream of PAM",
              " nt downstream of PAM"
       ), "</td> 
@@ -103,7 +103,7 @@ CASTLING_server <- function(session, input, output) {
   output$inp_cleave_at_text <- renderUI({
     
     tmp.text <- paste("The target is cleaved after …", 
-                      ifelse(input$inp_target_is_upstream, "upstream", "downstream"),
+                      ifelse(as.logical(input$inp_target_is_upstream), "upstream", "downstream"),
                       "of the PAM.")
     
     return(helpText(tmp.text))
@@ -180,7 +180,7 @@ CASTLING_server <- function(session, input, output) {
     
   })
   
-  # OBSERVERS ==========
+  # OBSERVERS ==================================================================
     
   # input FEATURE TYPES --------------------------------------------------------
   
@@ -317,7 +317,7 @@ CASTLING_server <- function(session, input, output) {
 
   })
   
-  # REACTIVES ==========
+  # REACTIVES ==================================================================
   
   # PARSE GENOME ASSEMBLY/ANNOTATION -------------------------------------------
   
@@ -450,8 +450,8 @@ CASTLING_server <- function(session, input, output) {
     # In order to have a nice progress bar, the set is split up into smaller
     # portions which are processed sequentially.
     
-    tmp.subsets_1 <- list() # will contain look-up after find_features()
-    tmp.subsets_2 <- list() # will contain look-up after find_targets()
+    tmp.subsets_1 <<- list() # will contain look-up after find_features()
+    tmp.subsets_2 <<- list() # will contain look-up after find_targets()
     
     steps.max <- 4 * length(get_genome_assembly()) # slice by landmarks
     steps.mrk <- rep(1:length(get_genome_assembly()), each = 4)
@@ -483,13 +483,14 @@ CASTLING_server <- function(session, input, output) {
       # PROGRESS FOR crRNA DETERMINATION
       
       for (p in input$inp_endonuclease_pam) {
+        
       for (i in 1:(steps.max - 1)) {
         
         tmp.subsets_2[[p]][[i]] <- find_targets(
           subject = tmp.subsets_1[[i]],
           pattern = p,
           look_around = input$inp_feature_look,
-          target_upstream = input$inp_target_is_upstream,
+          target_upstream = as.logical(input$inp_target_is_upstream),
           # If the following panels were not selected, those values might not be
           # set to default, so treat them as default:
           target_length = ifelse(is.null(input$inp_target_totlen),
